@@ -1,3 +1,7 @@
+:: iFit-Wolf3 - Autoincline control of treadmill via ADB and OCR
+:: Author: Al Udell
+:: Revised: April 22, 2023
+
 :: Assumes treadmill USB Debugging is turned on 
 
 @echo off
