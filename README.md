@@ -1,5 +1,5 @@
 # iFit-Wolf3
-##Experimental iFit auto-incline control of treadmill via ADB and OCR
+Experimental iFit auto-incline control of treadmill via ADB and OCR
 
 **Tested on the NordicTrack Commercial 2950 iFit Embedded Wifi Treadmill (2021 model)**
 
