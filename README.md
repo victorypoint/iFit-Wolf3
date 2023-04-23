@@ -59,3 +59,4 @@ Using Windows 10 or 11:
 
 ADB stands for Android Debug Bridge used by developers to connect their development computer with an Android device via a USB cable (and over Wifi in this case). If you don't have Android SDK installed on your PC, ADB may not be recognized. It's recommended you download the latest version.
 
+![image](https://user-images.githubusercontent.com/63697253/233869227-bde59dc5-283e-45ba-ba16-2fb43af1d11a.png)
