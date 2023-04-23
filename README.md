@@ -49,7 +49,7 @@ Using Windows 10 or 11:
 
 ### Files included:
 - **adb-connect.bat** (batch script to initiate an ADB connection with the treadmill. Enter the IP address of the treadmill)
-- **iwolf3.vbs****** (VBscript script to communicate with treadmill, take screenshots of Zwift, and launch process-image.py script for OCR)
+- **iwolf3.vbs** (VBscript script to communicate with treadmill, take screenshots of Zwift, and launch process-image.py script for OCR)
 - **iwolf3.bat** (batch script to launch iwolf3.vbs)
 - **process-image.py** (Python script to isolate incline area, OCR the incline value, and output OCR results to file ocr-output.txt)
 - **adb.exe, AdbWinApi.dll, AdbWinUsbApi.dll, grep.exe, tail.exe, and nircmd.exe** (required support files)
