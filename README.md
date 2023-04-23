@@ -3,11 +3,9 @@ Experimental iFit auto-incline control of treadmill via ADB and OCR
 
 ### Tested on the NordicTrack Commercial 2950 iFit Embedded Wifi Treadmill (2021 model)
 
-Building on the initial iFit-Wolf repo and code at https://github.com/victorypoint/iFit-Wolf, this update includes the capability to control the treadmill speed and incline. I've only tested this on the NordicTrack C2950 treadmill (2021 model). Refer to the iFit-Wolf repo for technical details on how the treadmill records individual workouts to a local text log in a sequential streaming format. The NT C2950 treadmills embedded iFit console runs Android (currently v9 on my model). 
+Building on my two initial iFit-Wolf repos and code at https://github.com/victorypoint/iFit-Wolf and https://github.com/victorypoint/iFit-Wolf2, this repo includes the capability to automatically control treadmill incline (auto-incline) from Zwift using OCR technology running on MS Windows. I've only tested this on the NordicTrack C2950 treadmill (2021 model). Refer to the previous iFit-Wolf and iFit-Wolf2 repos for technical details on how the treadmill incline is commmunicated and manually controlled via an ADB connection. The NT C2950 treadmills embedded iFit console runs Android (currently v9 on my model). Treadmill incline is controlled by moving it's on-screen incline slider control up and down.
 
-Building on the previous iFit-Wolf Windows VBscript code which displays the real-time speed and inclination values, this update includes functions to control the treadmill speed and incline by moving it's on-screen speed and incline slider controls up and down. The VBscript assumes an ADB connection has already been established with the treadmill, and proceeds to communicate speed and incline information over ADB.
-
-I've not included documentation here on how to configure the NT C2950 treadmill for ADB communication, but it involves accessing the machines “Privileged Mode”, turning on “Developer Options” in Android settings, and enabling “USB Debugging” mode. Accessing Privileged Mode is well documented on many websites, dependent on the treadmill model, and version of Android and iFit.
+Note: I've not included documentation here on how to configure the NT C2950 treadmill for ADB communication, but it involves accessing the machines “Privileged Mode”, turning on “Developer Options” in Android settings, and enabling “USB Debugging” mode. Accessing Privileged Mode is well documented on many websites, dependent on the treadmill model, and version of Android and iFit.
 
 Files included:
 - adb-connect.bat (batch script to initiate an ADB connection with the treadmill – change the IP to that of the treadmill)
@@ -19,7 +17,23 @@ Files included:
 
 ADB stands for Android Debug Bridge used by developers to connect their development computer with an Android device via a USB cable (and over Wifi in this case). If you don't have Android SDK installed on your PC, ADB may not be recognized. It's recommended you download the latest version.
 
-### Methodology for determining values for the on-screen speed and incline control calculations:
+### OCR Software Install and Setup
+
+Using Windows 10 or 11:
+
+1. Install Python
+
+- Download and install Python & PIP 3.10.11 - https://www.python.org/downloads/. Don’t install 3.11.x. It is not compatible with current OCR builds.
+- Python installs to - %USERPROFILE%\AppData\Local\Programs\Python\Python310
+- During installation, select - add python to path, select default installation options
+- After installation, ensure Python is added to Path environment
+- Python directory to add: %USERPROFILE%\AppData\Local\Programs\Python\Python310
+- Confirm path: echo %path%
+- Confirm Python version: python --version
+- Confirm PIP version: pip -V
+- Install OpenCV (cv2) if needed (PaddleOCR installer includes this): pip install opencv-python
+
+2. 
 
 - NordicTrack C2950 tablet screen is 1920 x 1080 (1080p HD)
      
