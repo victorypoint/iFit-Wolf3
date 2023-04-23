@@ -21,7 +21,7 @@ ADB stands for Android Debug Bridge used by developers to connect their developm
 
 Using Windows 10 or 11:
 
-1. Install Python
+1. Install Python & PIP
 
 - Download and install Python & PIP 3.10.11 - https://www.python.org/downloads/. Don’t install 3.11.x. It is not compatible with current OCR builds.
 - Python installs to - %USERPROFILE%\AppData\Local\Programs\Python\Python310
@@ -33,7 +33,19 @@ Using Windows 10 or 11:
 - Confirm PIP version: pip -V
 - Install OpenCV (cv2) if needed (PaddleOCR installer includes this): pip install opencv-python
 
-2. 
+2. Install PaddleOCR
+
+- Github Repo - https://github.com/PaddlePaddle/PaddleOCR
+- Install Paddlepaddle
+  - For CPU: pip install paddlepaddle==2.4.2 -i https://pypi.tuna.tsinghua.edu.cn/simple
+  - For nVidia GPU - pip install paddlepaddle-gpu -i https://pypi.tuna.tsinghua.edu.cn/simple
+- Install PaddleOCR Whl Package: pip install "paddleocr>=2.0.1"
+- Confirm PaddleOCR is working. It can be run from the command-line or in Python. Refer to: https://github.com/PaddlePaddle/PaddleOCR/blob/release/2.6/doc/doc_en/whl_en.md
+- Command-line testing:
+  - paddleocr --image_dir zwift-crop.png --lang en --use_gpu false --use_angle_cls false
+  - paddleocr --image_dir zwift-crop.png --lang en --use_gpu false --use_angle_cls false --show_log false > incline.txt
+
+*** I'm here ***
 
 - NordicTrack C2950 tablet screen is 1920 x 1080 (1080p HD)
      
