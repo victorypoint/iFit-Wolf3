@@ -45,9 +45,16 @@ Using Windows 10 or 11:
   - paddleocr --image_dir zwift-crop.png --lang en --use_gpu false --use_angle_cls false
   - paddleocr --image_dir zwift-crop.png --lang en --use_gpu false --use_angle_cls false --show_log false > incline.txt
 
-*** I'm here ***
+### iFit-Wolf3 Procedure  ***
 
-- NordicTrack C2950 tablet screen is 1920 x 1080 (1080p HD)
+- This solution works on a Windows PC running this solution (iFit-Wolf3) and Zwift. Before running iFit-Wolf3:
+  - Ensure tredmill is powered-up and connected to Windows PC via ADB connection. Run adb-connect.bat to establish an ADB connection to the treadmill via its IP address.
+  - Ensure treadmill is in manual workout mode with onscreen speed and incline controls visible.
+  - Ensure Zwift is launched in "Windowed full-screen mode" and is in game mode - that is, your avatar is ready to run and Zwift incline is displayed in the upper-right area.
+- When executed, iFit-Wolf3 will:
+  - Query the treadmill for it's current incline via ADB.
+  - Query Zwift for it's current incline, by taking a screenshot, and obtaining the incline value via OCR 
+  NordicTrack C2950 tablet screen is 1920 x 1080 (1080p HD)
      
 - Get distances and dimensions in pixels from tablet screenshot showing manual workout with onscreen controls
   - 1845 - x pixel position of middle of speed slider
