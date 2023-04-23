@@ -64,4 +64,3 @@ Figure 1: Zwift Screenshot
 
 ![image](https://user-images.githubusercontent.com/63697253/233869278-14649047-2a53-4c7a-8378-536ad78d3716.png)
 Figure 2: Cropped and processed Zwift incline ready for OCR
-
