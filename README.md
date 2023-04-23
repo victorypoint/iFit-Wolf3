@@ -37,10 +37,10 @@ Using Windows 10 or 11:
 
 ### To Run iFit-Wolf3:
 
-- This solution works on a Windows PC running this solution (iFit-Wolf3) and Zwift. Before running iFit-Wolf3:
+- This solution works on a Windows PC running iFit-Wolf3 and Zwift. Before running iFit-Wolf3:
   - Ensure tredmill is powered-up and connected to Windows PC via ADB connection. Run adb-connect.bat to establish an ADB connection to the treadmill via its IP address.
   - Ensure treadmill is in manual workout mode with onscreen speed and incline controls visible.
-  - Ensure Zwift is launched in "Windowed mode" and is "in game". That is, your avatar is ready to run and Zwift incline is displayed in the upper-right area of the screen.
+  - Ensure Zwift is launched in "Windowed mode" and is "in game" in either Run or Bike mode. That is, your avatar is ready to run or bike and Zwift incline is displayed in the upper-right area of the screen. 
 
 - Run iwolf3.bat. When executed, iFit-Wolf3 will:
   - Query the treadmill for it's current incline via ADB.
