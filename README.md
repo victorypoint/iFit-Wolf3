@@ -24,10 +24,10 @@ Using Windows 10 or 11:
 1. Install Python & PIP
 
 - Download and install Python & PIP 3.10.11 - https://www.python.org/downloads/. Don’t install 3.11.x. It is not compatible with current OCR builds.
-- Python installs to - %USERPROFILE%\AppData\Local\Programs\Python\Python310
-- During installation, select - add python to path, select default installation options
+- Python installs to - \%USERPROFILE%\AppData\Local\Programs\Python\Python310
+- During installation, select 'add python to path', and select default installation options
 - After installation, ensure Python is added to Path environment
-- Python directory to add: %USERPROFILE%\AppData\Local\Programs\Python\Python310
+- Python directory to add: \%USERPROFILE%\AppData\Local\Programs\Python\Python310
 - Confirm path: echo %path%
 - Confirm Python version: python --version
 - Confirm PIP version: pip -V
