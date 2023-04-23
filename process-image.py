@@ -2,7 +2,7 @@
 # Author: Al Udell
 # Revised: April 22, 2023
 
-# Process-image.py - Get Zwift screenshot, crop incline, OCR incline
+# process-image.py - Get Zwift screenshot, crop incline, OCR incline
 
 # imports
 import cv2
@@ -79,7 +79,6 @@ averageBlur = cv2.blur(inv, (3, 3))
 cv2.imwrite(outfileName, averageBlur, [cv2.IMWRITE_PNG_COMPRESSION, 0])
 
 # OCR image
-# paddleocr --image_dir zwift-crop.png --lang en --show_log false --use_gpu false
 ocr = PaddleOCR(lang='en', use_gpu=False, show_log=False)
 result = ocr.ocr(outfileName, cls=False)
 
@@ -87,5 +86,4 @@ for idx in range(len(result)):
   res = result[idx]
   with open(ocrfileName, 'w') as f:
     for line in res:
-      #print(line)
       print(line, file=f)
