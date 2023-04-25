@@ -9,7 +9,7 @@ import cv2
 import numpy as np
 import win32gui
 from paddleocr import PaddleOCR
-from PIL import ImageGrab
+from PIL import Image, ImageGrab
 
 # File paths
 outfileName = 'zwift-crop.png'
@@ -18,22 +18,28 @@ ocrfileName = 'ocr-output.txt'
 # Take Zwift screenshot
 hwnd = win32gui.FindWindow(None,'Zwift') 
 win32gui.SetForegroundWindow(hwnd)
-img = ImageGrab.grab()
+screenshot = ImageGrab.grab()
+
+# Convert screenshot to a numpy array
+screenshot_np = np.array(screenshot)
 
 # Crop image to incline area
-screenwidth, screenheight = img.size
+screenwidth, screenheight = screenshot.size
 col1 = int(screenwidth/3000 * 2800)
 row1 = int(screenheight/2000 * 75)
 row2 = int(screenheight/2000 * 200)
 col2 = screenwidth
-img = img.crop((col1,row1,col2,row2)).save(outfileName)
+screenshot_np = screenshot_np[row1:row2, col1:col2]
 
-# Read image
-image = cv2.imread(outfileName)
+# Convert numpy array to PIL image
+screenshot_pil = Image.fromarray(screenshot_np)
 
-# Convert image to HSV
-result = image.copy()
-image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+# Convert PIL Image to a cv2 image
+cropped_cv2 = cv2.cvtColor(np.array(screenshot_pil), cv2.COLOR_RGB2BGR)
+
+# Convert cv2 image to HSV
+result = cropped_cv2.copy()
+image = cv2.cvtColor(cropped_cv2, cv2.COLOR_BGR2HSV)
 
 # Isolate white mask
 lower = np.array([0,0,159])
@@ -93,5 +99,4 @@ for idx in range(len(result)):
   res = result[idx]
   with open(ocrfileName, 'w') as f:
     for line in res:
-      #print(line)
       print(line, file=f)
