@@ -2,27 +2,34 @@
 # Author: Al Udell
 # Revised: April 22, 2023
 
-# process-image.py - Get Zwift screenshot, crop incline, OCR incline
+# process-image.py - take Zwift screenshot, crop incline, OCR incline
 
 # imports
 import cv2
 import numpy as np
+import win32gui
 from paddleocr import PaddleOCR
+from PIL import ImageGrab
 
-# image path
-infileName = 'zwift.png'
+# File paths
 outfileName = 'zwift-crop.png'
 ocrfileName = 'ocr-output.txt'
 
-# Read image
-zwiftImage = cv2.imread(infileName)
+# Take Zwift screenshot
+hwnd = win32gui.FindWindow(None,'Zwift') 
+win32gui.SetForegroundWindow(hwnd)
+img = ImageGrab.grab()
 
-# Crop image to incline area (don't crop without % symbol - gives worse OCR results)
-# format: [start_row:end_row, start_col:end_col]
-# newcol = screenwidth/3000 * oldcol
-# newrow = screenheight/2000 * oldrow
-image = zwiftImage[75:200, 2800:3000]  #surface pc 3000x2000
-#image = zwiftImage[54:144, 2389:2560]  #zwift pc 2560x1440
+# Crop image to incline area
+screenwidth, screenheight = img.size
+col1 = int(screenwidth/3000 * 2800)
+row1 = int(screenheight/2000 * 75)
+row2 = int(screenheight/2000 * 200)
+col2 = screenwidth
+img = img.crop((col1,row1,col2,row2)).save(outfileName)
+
+# Read image
+image = cv2.imread(outfileName)
 
 # Convert image to HSV
 result = image.copy()
@@ -86,4 +93,5 @@ for idx in range(len(result)):
   res = result[idx]
   with open(ocrfileName, 'w') as f:
     for line in res:
+      #print(line)
       print(line, file=f)

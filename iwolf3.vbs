@@ -94,16 +94,7 @@ Function GetZwiftIncline
   if colProcessList.count>0 then
     'wscript.echo "Zwift is running..."
 
-    'take Zwift screenshot
-    wshShell.AppActivate "Zwift"
-    imagenameNoext = "zwift"
-    imagename = imagenameNoext & ".png"
-    
-    'execute nircmd - hide window, wait for completion
-    wshShell.Run "nircmd.exe savescreenshot " & imagename, 7, true
-    'wscript.echo "Screenshot taken..."
-	
-    'execute python script - hide window, wait for completion
+    'run python script - hide window, wait for completion
     wshShell.Run "process-image.py", 7, true
     'wscript.echo "Image processed..."
 
@@ -116,21 +107,19 @@ Function GetZwiftIncline
       do Until ocrfile.AtEndOfStream
         str = ocrfile.ReadLine()
         'wscript.echo str
-        'if InStr(str, "ppocr INFO: [") > 0 then
 
-          'get incline
-          quoteIndex1 = InStr(str, "'")
-          quoteIndex2 = InStrRev(str, "'")
-          valueSubstring = Mid(str, quoteIndex1 + 1, quoteIndex2 - quoteIndex1 - 1)
-          sIncline = sIncline & valueSubstring
+        'get incline
+        quoteIndex1 = InStr(str, "'")
+        quoteIndex2 = InStrRev(str, "'")
+        valueSubstring = Mid(str, quoteIndex1 + 1, quoteIndex2 - quoteIndex1 - 1)
+        sIncline = sIncline & valueSubstring
 
-          'get recognition confidence
-          commaIndex = InStrRev(str, ",")
-          subString = Mid(str, commaIndex + 1, Len(str) - commaIndex - 2)
-          subString = Trim(subString)
-          rConfidence = FormatPercent(CDbl(subString), 0)
+        'get recognition confidence
+        commaIndex = InStrRev(str, ",")
+        subString = Mid(str, commaIndex + 1, Len(str) - commaIndex - 2)
+        subString = Trim(subString)
+        rConfidence = FormatPercent(CDbl(subString), 0)
 
-        'end if 'ppocr.. found
       loop 'each line
 
       'finalize incline value
