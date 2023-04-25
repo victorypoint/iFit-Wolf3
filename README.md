@@ -21,7 +21,8 @@ Using Windows 10 or 11:
 - Confirm path: echo %path%
 - Confirm Python version: python --version
 - Confirm PIP version: pip -V
-- Install OpenCV (cv2) if needed (PaddleOCR installer includes this): pip install opencv-python
+- Install OpenCV if needed (PaddleOCR installer includes this): pip install opencv-python
+- Install win32gui: pip install pywin32
 
 2. Install PaddleOCR
 
