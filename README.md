@@ -50,9 +50,9 @@ Using Windows 10 or 11:
 
 ### Files included:
 - **adb-connect.bat** (batch script to initiate an ADB connection with the treadmill. Enter the IP address of the treadmill)
-- **iwolf3.vbs** (VBscript script to communicate with treadmill, take screenshots of Zwift, and launch process-image.py script for OCR)
+- **iwolf3.vbs** (VBscript script to communicate with treadmill and launch process-image.py script for OCR)
 - **iwolf3.bat** (batch script to launch iwolf3.vbs)
-- **process-image.py** (Python script to take Zwift screenshot, OCR the incline value, and output OCR result to file ocr-output.txt)
+- **process-image.py** (Python script to take Zwift screenshot, OCR the incline value, and output result to file ocr-output.txt)
 - **adb.exe, AdbWinApi.dll, AdbWinUsbApi.dll, grep.exe, and tail.exe** (required support files)
 - **zwift.png** (sample Zwift screenshot at 2560 x 1440 resolution)
 - **adb-screenshot.bat** (batch script to take a screenshot of the treadmill screen if needed)
