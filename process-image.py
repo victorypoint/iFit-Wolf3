@@ -110,8 +110,8 @@ result = ocr.ocr(outfileName, cls=False)
 ocr_text = ''
 for line in result:
     for word in line:
-        ocr_text += f"{word[1][0]}"  # Extract the first element of the tuple and wrap it with single quotes
-    #ocr_text += '\n'  # Add a newline character after each line
+        ocr_text += f"{word[1][0]}"
+    #ocr_text += '\n'
 #print(ocr_text)
 
 # Write OCR text to file
