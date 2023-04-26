@@ -93,7 +93,6 @@ Function GetZwiftIncline
   FindProc = "zwiftapp.exe"
   ocrOutput = "ocr-output.txt"
   sIncline = ""
-  rConfidence = 0
 
   'is Zwift running?
   set objWMIService = GetObject("winmgmts:" _
@@ -101,12 +100,16 @@ Function GetZwiftIncline
   set colProcessList = objWMIService.ExecQuery _
     ("Select Name from Win32_Process WHERE Name='" & FindProc & "'")
 
-  if colProcessList.count>0 then
+  if colProcessList.count > 0 then
     'wscript.echo "Zwift is running..."
 
-    'use asynchronous Exec to cache
+    'use synchronous Exec
     cmdString = "cmd /c python process-image.py"
     set oexec = wshShell.exec(cmdString)
+    'wait for completion
+    Do While oexec.Status = 0
+      wscript.sleep 100
+    Loop
     'wscript.echo "Image processed..."
 
     'get incline from file
@@ -115,24 +118,15 @@ Function GetZwiftIncline
     'file not empty
     if objFile.Size > 0 then
       Set ocrfile = fso.OpenTextFile(ocrOutput,1)
-      str = ocrfile.ReadLine()        
-      'wscript.echo str
-
-      'remove all characters that are not "-" and integers from input string
-      Set regex = New RegExp
-      regex.Pattern = "[^-0-9]"
-      regex.Global = True
-      sIncline = regex.Replace(str, "")
+      sIncline = ocrfile.ReadLine()        
+      'wscript.echo sIncline
 
       'string not empty (failed OCR)
       if sIncline <> "" then
         GetZwiftIncline = formatnumber(cstr(sIncline),1)
       end if
 
-      ocrfile.Close
-
     end if 'file not empty
-
   end if 'zwift is running
 
   Set objWMIService = Nothing

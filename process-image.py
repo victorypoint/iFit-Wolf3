@@ -8,11 +8,11 @@
 import cv2
 import numpy as np
 import win32gui
+import re
 from paddleocr import PaddleOCR
 from PIL import Image, ImageGrab
 
-# File paths
-outfileName = 'zwift-crop.png'
+# File path
 ocrfileName = 'ocr-output.txt'
 
 # Take Zwift screenshot
@@ -37,7 +37,6 @@ screenshot_pil = Image.fromarray(screenshot_np)
 
 # Convert PIL Image to a cv2 image
 cropped_cv2 = cv2.cvtColor(np.array(screenshot_pil), cv2.COLOR_RGB2BGR)
-#cropped_cv2.show()
 
 # Convert cv2 image to HSV
 result = cropped_cv2.copy()
@@ -48,28 +47,24 @@ lower = np.array([0,0,159])
 upper = np.array([0,0,255])
 mask0 = cv2.inRange(image, lower, upper)
 result0 = cv2.bitwise_and(result, result, mask=mask0)
-#result0.show()
 
 # Isolate yellow mask
 lower = np.array([24,239,241])
 upper = np.array([24,253,255])
 mask1 = cv2.inRange(image, lower, upper)
 result1 = cv2.bitwise_and(result, result, mask=mask1)
-#result1.show()
 
 # Isolate orange mask
 lower = np.array([8,191,243])
 upper = np.array([8,192,243])
 mask2 = cv2.inRange(image, lower, upper)
 result2 = cv2.bitwise_and(result, result, mask=mask2)
-#result2.show()
 
 # Isolate red mask
 lower = np.array([0,255,255])
 upper = np.array([10,255,255])
 mask3 = cv2.inRange(image, lower, upper)
 result3 = cv2.bitwise_and(result, result, mask=mask3)
-#result3.show()
 
 # Join colour masks
 mask = mask0+mask1+mask2+mask3
@@ -80,11 +75,9 @@ merge[np.where(mask==0)] = 0
 
 # Convert to grayscale
 gray = cv2.cvtColor(merge, cv2.COLOR_BGR2GRAY)
-#gray.show()
 
 # Convert to black/white by threshhold
 ret,bin = cv2.threshold(gray,30,255,cv2.THRESH_BINARY)
-#bin.show()
 
 # Closing
 kernel = np.ones((3,3),np.uint8)
@@ -92,19 +85,13 @@ closing = cv2.morphologyEx(bin, cv2.MORPH_CLOSE, kernel)
 
 # Invert black/white
 inv = cv2.bitwise_not(closing)
-#inv.show()
 
 # Apply average blur
 averageBlur = cv2.blur(inv, (3, 3))
-#averageBlur.show()
-
-# Write image to png file
-cv2.imwrite(outfileName, averageBlur, [cv2.IMWRITE_PNG_COMPRESSION, 0])
 
 # OCR image
 ocr = PaddleOCR(lang='en', use_gpu=False, show_log=False)
-result = ocr.ocr(outfileName, cls=False)
-#print(result)
+result = ocr.ocr(averageBlur, cls=False)
 
 # Extract OCR text
 ocr_text = ''
@@ -112,7 +99,10 @@ for line in result:
     for word in line:
         ocr_text += f"{word[1][0]}"
     #ocr_text += '\n'
-#print(ocr_text)
+
+# Remove all characters that are not "-" and integers from OCR text
+pattern = r"[^-\d]+"
+ocr_text = re.sub(pattern, "", ocr_text)
 
 # Write OCR text to file
 with open(ocrfileName, 'w') as f:
