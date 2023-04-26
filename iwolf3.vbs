@@ -29,9 +29,14 @@ infilename2 = "/sdcard/.wolflogs/" & infilename
 Do
 
   'query treadmill for incline
-  cmdstring = "adb shell tail -n5000 " & infilename2 & " | grep -a ""Changed Grade""" & " | tail -n1 | grep -oE ""[^ ]+$"""
-  'wscript.echo cmdstring 
-  set oexec = wso.exec("cmd /c " & cmdstring)
+  cmdString = "cmd /c adb shell tail -n5000 " & infilename2 & " | grep -a ""Changed Grade""" & " | tail -n1 | grep -oE ""[^ ]+$"""
+  'wscript.echo cmdString 
+  'use synchronous Exec
+  set oexec = wso.exec(cmdString)
+  'wait for completion
+  Do While oexec.Status = 0
+    wscript.sleep 100
+  Loop
   sValue = oexec.stdout.readline
   if sValue <> "" then
     sValue = formatnumber(csng(sValue),1)
@@ -57,16 +62,21 @@ Do
 
     'set incline slider to target position
     incliney2 = incliney1 - Round((nIncline - cIncline) * inclinescale)  'calculate vertical pixel position for new incline 
-    cmdString = "adb shell input swipe " & inclinex1 & " " & incliney1 & " " & inclinex1 & " " & incliney2 & " 200"  'simulate touch-swipe on incline slider
-    set oexec = wso.exec("cmd /c" & cmdstring)  'execute adb command
+    cmdString = "cmd /c adb shell input swipe " & inclinex1 & " " & incliney1 & " " & inclinex1 & " " & incliney2 & " 200"  'simulate touch-swipe on incline slider
     'wscript.echo cmdString 
+    'use synchronous Exec
+    set oexec = wso.exec(cmdString)
+    'wait for completion
+    Do While oexec.Status = 0
+      wscript.sleep 100
+    Loop
 
     'report new incline and corresponding swipe
     'wscript.echo "New treadmill incline: " & formatnumber(nIncline,1) & " - " & cmdString
     wscript.echo "New treadmill incline: " & formatnumber(nIncline,1)
 
     'give treadmill time to adjust incline
-    wscript.sleep 2000
+    'wscript.sleep 2000
   End If
   wscript.echo 
 
@@ -94,51 +104,31 @@ Function GetZwiftIncline
   if colProcessList.count>0 then
     'wscript.echo "Zwift is running..."
 
-    'run python script - hide window, wait for completion
-    wshShell.Run "process-image.py", 7, true
+    'use asynchronous Exec to cache
+    cmdString = "cmd /c python process-image.py"
+    set oexec = wshShell.exec(cmdString)
     'wscript.echo "Image processed..."
 
     'get incline from file
     set objFile = fso.GetFile(ocrOutput)
+
     'file not empty
     if objFile.Size > 0 then
       Set ocrfile = fso.OpenTextFile(ocrOutput,1)
-      'process each line
-      do Until ocrfile.AtEndOfStream
-        str = ocrfile.ReadLine()
-        'wscript.echo str
+      str = ocrfile.ReadLine()        
+      'wscript.echo str
 
-        'get incline
-        quoteIndex1 = InStr(str, "'")
-        quoteIndex2 = InStrRev(str, "'")
-        valueSubstring = Mid(str, quoteIndex1 + 1, quoteIndex2 - quoteIndex1 - 1)
-        sIncline = sIncline & valueSubstring
+      'remove all characters that are not "-" and integers from input string
+      Set regex = New RegExp
+      regex.Pattern = "[^-0-9]"
+      regex.Global = True
+      sIncline = regex.Replace(str, "")
 
-        'get recognition confidence
-        commaIndex = InStrRev(str, ",")
-        subString = Mid(str, commaIndex + 1, Len(str) - commaIndex - 2)
-        subString = Trim(subString)
-        rConfidence = FormatPercent(CDbl(subString), 0)
-
-      loop 'each line
-
-      'finalize incline value
-      intValue = ""
-      'isolate number
-      for i = 1 To Len(sIncline)
-        if IsNumeric(Mid(sIncline, i, 1)) then
-          intValue = intValue & Mid(sIncline, i, 1)
-        end if
-      next
-      'check for - sign
-      for i = 1 To Len(sIncline)
-        if Mid(sIncline, i, 1) = "-" then
-          intValue = "-" & intValue
-        end if
-      next
-      if intValue <> "" then
-        GetZwiftIncline = formatnumber(cstr(intValue),1)
+      'string not empty (failed OCR)
+      if sIncline <> "" then
+        GetZwiftIncline = formatnumber(cstr(sIncline),1)
       end if
+
       ocrfile.Close
 
     end if 'file not empty
