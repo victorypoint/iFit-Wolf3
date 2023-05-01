@@ -30,7 +30,7 @@ Using Windows 10 or 11:
 - Install Paddlepaddle
   - For CPU: pip install paddlepaddle==2.4.2 -i https://pypi.tuna.tsinghua.edu.cn/simple
   - For nVidia GPU - pip install paddlepaddle-gpu -i https://pypi.tuna.tsinghua.edu.cn/simple
-- Install PaddleOCR Whl Package: pip install "paddleocr>=2.0.1"
+- Install PaddleOCR Wheel (whl) Package: pip install "paddleocr>=2.0.1"
 - Confirm PaddleOCR is working. It can be run from the command-line or in Python. Refer to: https://github.com/PaddlePaddle/PaddleOCR/blob/release/2.6/doc/doc_en/whl_en.md
 - Command-line testing:
   - paddleocr --image_dir zwift-crop.png --lang en --use_gpu false --use_angle_cls false
