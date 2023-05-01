@@ -19,7 +19,9 @@ ocrfileName = 'ocr-output.txt'
 hwnd = win32gui.FindWindow(None,'Zwift') 
 win32gui.SetForegroundWindow(hwnd)
 screenshot = ImageGrab.grab()
-#cropped_cv2.show()
+
+# Scale image to 3000 x 2000
+screenshot = screenshot.resize((3000, 2000))
 
 # Convert screenshot to a numpy array
 screenshot_np = np.array(screenshot)
@@ -28,15 +30,15 @@ screenshot_np = np.array(screenshot)
 screenwidth, screenheight = screenshot.size
 col1 = int(screenwidth/3000 * 2800)
 row1 = int(screenheight/2000 * 75)
-row2 = int(screenheight/2000 * 200)
 col2 = screenwidth
-screenshot_np = screenshot_np[row1:row2, col1:col2]
+row2 = int(screenheight/2000 * 200)
+cropped_np = screenshot_np[row1:row2, col1:col2]
 
 # Convert numpy array to PIL image
-screenshot_pil = Image.fromarray(screenshot_np)
+cropped_pil = Image.fromarray(cropped_np)
 
 # Convert PIL Image to a cv2 image
-cropped_cv2 = cv2.cvtColor(np.array(screenshot_pil), cv2.COLOR_RGB2BGR)
+cropped_cv2 = cv2.cvtColor(np.array(cropped_pil), cv2.COLOR_RGB2BGR)
 
 # Convert cv2 image to HSV
 result = cropped_cv2.copy()
@@ -98,7 +100,6 @@ ocr_text = ''
 for line in result:
     for word in line:
         ocr_text += f"{word[1][0]}"
-    #ocr_text += '\n'
 
 # Remove all characters that are not "-" and integers from OCR text
 pattern = r"[^-\d]+"
