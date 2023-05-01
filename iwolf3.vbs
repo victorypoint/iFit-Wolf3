@@ -7,7 +7,7 @@
 
 'display startup message
 createobject("wscript.shell").popup "Ensure treadmill is in manual workout mode with onscreen speed and incline controls visible. " _
-  & vbCrLf & vbCrLf & "Also ensure Zwift is running with incline showing.", 10, "Warning", 64
+  & vbCrLf & vbCrLf & "Also ensure Zwift is running in game with incline showing.", 10, "Warning", 64
 
 'initialize
 set wso = createobject("wscript.shell")
