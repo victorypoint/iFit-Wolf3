@@ -26,7 +26,7 @@ screenshot = screenshot.resize((3000, 2000))
 # Convert screenshot to a numpy array
 screenshot_np = np.array(screenshot)
 
-# Crop image to incline area (don't crop without % symbol - gives worse OCR results)
+# Crop image to incline area
 screenwidth, screenheight = screenshot.size
 col1 = int(screenwidth/3000 * 2800)
 row1 = int(screenheight/2000 * 75)
