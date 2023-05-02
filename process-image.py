@@ -9,11 +9,13 @@ import cv2
 import numpy as np
 import win32gui
 import re
+from datetime import datetime
 from paddleocr import PaddleOCR
 from PIL import Image, ImageGrab
 
 # File path
 ocrfileName = 'ocr-output.txt'
+ocrlogFile = 'ocr-logfile.txt'
 
 # Take Zwift screenshot
 hwnd = win32gui.FindWindow(None,'Zwift') 
@@ -104,6 +106,11 @@ for line in result:
 # Remove all characters that are not "-" and integers from OCR text
 pattern = r"[^-\d]+"
 ocr_text = re.sub(pattern, "", ocr_text)
+
+# Write OCR text to log file
+dt = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+with open(ocrlogFile, "a") as file:
+   file.write(f"{dt}, {ocr_text}" + "\n")
 
 # Write OCR text to file
 with open(ocrfileName, 'w') as f:
