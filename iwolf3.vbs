@@ -25,6 +25,12 @@ infilename = yr & "-" & mo & "-" & dy & "_logs.txt"
 infilename2 = "/sdcard/.wolflogs/" & infilename
 'wscript.echo infilename2
 
+'delete OCR logfile if it exists
+ocrlogFile = "ocr-logfile.txt"
+If fso.FileExists(ocrlogFile) Then
+    fso.DeleteFile(ocrlogFile)
+End If
+
 'loop - process wolflog and Zwift screenshot
 Do
 

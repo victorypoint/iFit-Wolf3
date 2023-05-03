@@ -106,11 +106,15 @@ for line in result:
 # Remove all characters that are not "-" and integers from OCR text
 pattern = r"[^-\d]+"
 ocr_text = re.sub(pattern, "", ocr_text)
+if ocr_text:
+    incline = ocr_text
+else:
+    incline = 'None'
 
 # Write OCR text to log file
 dt = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 with open(ocrlogFile, "a") as file:
-   file.write(f"{dt}, {ocr_text}" + "\n")
+   file.write(f"{dt}, {incline}" + "\n")
 
 # Write OCR text to file
 with open(ocrfileName, 'w') as f:
