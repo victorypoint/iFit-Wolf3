@@ -95,7 +95,7 @@ averageBlur = cv2.blur(inv, (3, 3))
 
 # OCR image
 ocr = PaddleOCR(lang='en', use_gpu=False, enable_mkldnn=True, show_log=False)
-result = ocr.ocr(zwiftImage, cls=False, det=True, rec=True)
+result = ocr.ocr(averageBlur, cls=False, det=True, rec=True)
 
 # Extract OCR text
 ocr_text = ''
