@@ -27,13 +27,10 @@ Using Windows 10 or 11:
 2. Install PaddleOCR
 
 - Github Repo - https://github.com/PaddlePaddle/PaddleOCR
-- Install Paddlepaddle CPU version: pip install paddlepaddle==2.4.2 -i https://mirror.baidu.com/pypi/simple
+- Install Paddlepaddle GPU version: python -m pip install paddlepaddle-gpu==2.4.2.post117 -f https://www.paddlepaddle.org.cn/whl/windows/mkl/avx/stable.html![image](https://github.com/victorypoint/iFit-Wolf3/assets/63697253/69c6c92d-eea0-4192-a7ee-688f7b4d013c)
 - Install PaddleOCR Wheel (whl) Package: pip install "paddleocr>=2.0.1"
 - Confirm PaddleOCR is working. It can be run from the command-line or in Python. Refer to: https://github.com/PaddlePaddle/PaddleOCR/blob/release/2.6/doc/doc_en/whl_en.md
-- Command-line testing:
-  - paddleocr --image_dir zwift-crop.png --lang en --use_gpu true
-  - paddleocr --image_dir zwift-crop.png --lang en --use_gpu true --det true --rec true --use_angle_cls false
-  - paddleocr --image_dir zwift-crop.png --lang en --use_gpu true --show_log false
+- Command-line test: paddleocr --image_dir zwift-crop.png --lang en --use_gpu false
 
 ### To Run iFit-Wolf3:
 
