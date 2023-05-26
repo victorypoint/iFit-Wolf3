@@ -51,6 +51,7 @@ Using Windows 10 or 11:
 - **process-image.py** (Python script to take Zwift screenshot, OCR the incline value, and output result to file ocr-output.txt)
 - **adb.exe, AdbWinApi.dll, AdbWinUsbApi.dll, grep.exe, and tail.exe** (required support files)
 - **zwift.png** (sample Zwift screenshot at 2560 x 1440 resolution)
+- **zwift_crop.png** (sample cropped Zwift screenshot of incline text)
 - **adb-screenshot.bat** (batch script to take a screenshot of the treadmill screen if needed)
 - **onscreen-controls.png** (example screenshot of NT C2950 screen with on-screen speed and incline controls)
 
